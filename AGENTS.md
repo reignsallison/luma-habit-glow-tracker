@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Tracker screens live under src/routes/_authenticated; each user's tracker is one JSON row in tracker_state, loaded/saved by src/lib/store.ts — keeps the simple in-memory store while syncing across devices.

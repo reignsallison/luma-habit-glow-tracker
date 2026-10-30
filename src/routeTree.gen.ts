@@ -10,53 +10,84 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as IntakeRouteImport } from './routes/intake'
-import { Route as StatsRouteImport } from './routes/stats'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedHabitsRouteImport } from './routes/_authenticated/habits'
+import { Route as AuthenticatedIntakeRouteImport } from './routes/_authenticated/intake'
+import { Route as AuthenticatedStatsRouteImport } from './routes/_authenticated/stats'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IntakeRoute = IntakeRouteImport.update({
-  id: '/intake',
-  path: '/intake',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StatsRoute = StatsRouteImport.update({
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedHabitsRoute = AuthenticatedHabitsRouteImport.update({
+  id: '/habits',
+  path: '/habits',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedIntakeRoute = AuthenticatedIntakeRouteImport.update({
+  id: '/intake',
+  path: '/intake',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedStatsRoute = AuthenticatedStatsRouteImport.update({
   id: '/stats',
   path: '/stats',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/intake': typeof IntakeRoute
-  '/stats': typeof StatsRoute
+  '/auth': typeof AuthRoute
+  '/habits': typeof AuthenticatedHabitsRoute
+  '/intake': typeof AuthenticatedIntakeRoute
+  '/stats': typeof AuthenticatedStatsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/intake': typeof IntakeRoute
-  '/stats': typeof StatsRoute
+  '/auth': typeof AuthRoute
+  '/habits': typeof AuthenticatedHabitsRoute
+  '/intake': typeof AuthenticatedIntakeRoute
+  '/stats': typeof AuthenticatedStatsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/intake': typeof IntakeRoute
-  '/stats': typeof StatsRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/habits': typeof AuthenticatedHabitsRoute
+  '/_authenticated/intake': typeof AuthenticatedIntakeRoute
+  '/_authenticated/stats': typeof AuthenticatedStatsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/intake' | '/stats'
+  fullPaths: '/' | '/auth' | '/habits' | '/intake' | '/stats'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/intake' | '/stats'
-  id: '__root__' | '/' | '/intake' | '/stats'
+  to: '/' | '/auth' | '/habits' | '/intake' | '/stats'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/habits'
+    | '/_authenticated/intake'
+    | '/_authenticated/stats'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  IntakeRoute: typeof IntakeRoute
-  StatsRoute: typeof StatsRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,27 +99,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/intake': {
-      id: '/intake'
-      path: '/intake'
-      fullPath: '/intake'
-      preLoaderRoute: typeof IntakeRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/stats': {
-      id: '/stats'
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/habits': {
+      id: '/_authenticated/habits'
+      path: '/habits'
+      fullPath: '/habits'
+      preLoaderRoute: typeof AuthenticatedHabitsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/intake': {
+      id: '/_authenticated/intake'
+      path: '/intake'
+      fullPath: '/intake'
+      preLoaderRoute: typeof AuthenticatedIntakeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/stats': {
+      id: '/_authenticated/stats'
       path: '/stats'
       fullPath: '/stats'
-      preLoaderRoute: typeof StatsRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedStatsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedHabitsRoute: typeof AuthenticatedHabitsRoute
+  AuthenticatedIntakeRoute: typeof AuthenticatedIntakeRoute
+  AuthenticatedStatsRoute: typeof AuthenticatedStatsRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedHabitsRoute: AuthenticatedHabitsRoute,
+  AuthenticatedIntakeRoute: AuthenticatedIntakeRoute,
+  AuthenticatedStatsRoute: AuthenticatedStatsRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  IntakeRoute: IntakeRoute,
-  StatsRoute: StatsRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
