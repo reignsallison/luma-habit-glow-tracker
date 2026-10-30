@@ -127,7 +127,7 @@ function Line({ data, goal, color }: { data: Pt[]; goal: number; color: string }
       <div className="mt-2 flex justify-between text-[10px] text-muted-foreground">
         {data.map((d, i) => <span key={i} className={hi === i ? "text-foreground" : ""}>{d.label.slice(0, 2)}</span>)}
       </div>
-      <div className="mt-2 h-5 text-sm">{hi !== null && <span><span className="text-muted-foreground">{data[hi].label}:</span> <b>{data[hi].display}</b></span>}</div>
+      <div className="mt-2 h-5 text-sm">{hi !== null && <span><span className="text-muted-foreground">{data[hi]?.label}:</span> <b>{data[hi]?.display}</b></span>}</div>
     </div>
   );
 }
