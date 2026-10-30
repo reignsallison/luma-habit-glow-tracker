@@ -38,28 +38,56 @@ function seed(): State {
   return { habits: seedHabits, logs, waterGoal: 2500, calorieGoal: 2200 };
 }
 
-const KEY = "pulse-tracker-v1";
 let state: State = seed();
 const serverState = state;
 const listeners = new Set<() => void>();
-let loaded = false;
+let userId: string | null = null;
+let saveTimer: ReturnType<typeof setTimeout> | undefined;
 
-function emit() {
-  if (typeof window !== "undefined") localStorage.setItem(KEY, JSON.stringify(state));
+function notify() {
   listeners.forEach((l) => l());
 }
 
+function emit() {
+  notify();
+  if (!userId) return;
+  const uid = userId;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async () => {
+    const { supabase } = await import("@/integrations/supabase/client");
+    await supabase.from("tracker_state").upsert({ user_id: uid, data: state as never, updated_at: new Date().toISOString() });
+  }, 500);
+}
+
+function freshState(): State {
+  return { habits: seedHabits, logs: {}, waterGoal: 2500, calorieGoal: 2200 };
+}
+
+/** Load the signed-in user's saved tracker and profile from the cloud. */
+export async function bindUser(uid: string, email: string) {
+  if (userId === uid) return;
+  userId = uid;
+  const { supabase } = await import("@/integrations/supabase/client");
+  const [{ data: row }, { data: prof }] = await Promise.all([
+    supabase.from("tracker_state").select("data").eq("user_id", uid).maybeSingle(),
+    supabase.from("profiles").select("display_name").eq("id", uid).maybeSingle(),
+  ]);
+  const name = prof?.display_name || email.split("@")[0] || "Friend";
+  profile.name = name;
+  profile.handle = email;
+  profile.avatar = name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+  state = (row?.data as State | undefined) ?? freshState();
+  if (!row) emit();
+  else notify();
+}
+
+export function unbindUser() {
+  userId = null;
+  state = seed();
+  notify();
+}
+
 function subscribe(l: () => void) {
-  if (!loaded && typeof window !== "undefined") {
-    loaded = true;
-    const raw = localStorage.getItem(KEY);
-    if (raw) {
-      try {
-        state = JSON.parse(raw);
-      } catch {}
-      queueMicrotask(() => listeners.forEach((x) => x()));
-    }
-  }
   listeners.add(l);
   return () => listeners.delete(l);
 }
@@ -131,9 +159,8 @@ export function lastDays(s: State, n: number) {
 }
 
 export const profile = {
-  name: "Ava Sinclair",
-  handle: "@avasinclair",
-  plan: "Pulse Pro",
-  avatar: "AS",
-  memberSince: "Mar 2025",
+  name: "Friend",
+  handle: "",
+  plan: "Pulse Free",
+  avatar: "✦",
 };

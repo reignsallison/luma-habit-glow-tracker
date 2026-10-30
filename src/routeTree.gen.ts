@@ -9,86 +9,90 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as IntakeRouteImport } from './routes/intake'
-import { Route as StatsRouteImport } from './routes/stats'
+import { Route as AuthenticatedHabitsRouteImport } from './routes/_authenticated/habits'
+import { Route as AuthenticatedIntakeRouteImport } from './routes/_authenticated/intake'
+import { Route as AuthenticatedStatsRouteImport } from './routes/_authenticated/stats'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthenticatedHabitsRoute = AuthenticatedHabitsRouteImport.update({
+  id: '/_authenticated/habits',
+  path: '/habits',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IntakeRoute = IntakeRouteImport.update({
-  id: '/intake',
+const AuthenticatedIntakeRoute = AuthenticatedIntakeRouteImport.update({
+  id: '/_authenticated/intake',
   path: '/intake',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StatsRoute = StatsRouteImport.update({
-  id: '/stats',
+const AuthenticatedStatsRoute = AuthenticatedStatsRouteImport.update({
+  id: '/_authenticated/stats',
   path: '/stats',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/intake': typeof IntakeRoute
-  '/stats': typeof StatsRoute
+  '/habits': typeof AuthenticatedHabitsRoute
+  '/intake': typeof AuthenticatedIntakeRoute
+  '/stats': typeof AuthenticatedStatsRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/intake': typeof IntakeRoute
-  '/stats': typeof StatsRoute
+  '/habits': typeof AuthenticatedHabitsRoute
+  '/intake': typeof AuthenticatedIntakeRoute
+  '/stats': typeof AuthenticatedStatsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/intake': typeof IntakeRoute
-  '/stats': typeof StatsRoute
+  '/_authenticated/habits': typeof AuthenticatedHabitsRoute
+  '/_authenticated/intake': typeof AuthenticatedIntakeRoute
+  '/_authenticated/stats': typeof AuthenticatedStatsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/intake' | '/stats'
+  fullPaths: '/habits' | '/intake' | '/stats'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/intake' | '/stats'
-  id: '__root__' | '/' | '/intake' | '/stats'
+  to: '/habits' | '/intake' | '/stats'
+  id:
+    | '__root__'
+    | '/_authenticated/habits'
+    | '/_authenticated/intake'
+    | '/_authenticated/stats'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  IntakeRoute: typeof IntakeRoute
-  StatsRoute: typeof StatsRoute
+  AuthenticatedHabitsRoute: typeof AuthenticatedHabitsRoute
+  AuthenticatedIntakeRoute: typeof AuthenticatedIntakeRoute
+  AuthenticatedStatsRoute: typeof AuthenticatedStatsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/_authenticated/habits': {
+      id: '/_authenticated/habits'
+      path: '/habits'
+      fullPath: '/habits'
+      preLoaderRoute: typeof AuthenticatedHabitsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/intake': {
-      id: '/intake'
+    '/_authenticated/intake': {
+      id: '/_authenticated/intake'
       path: '/intake'
       fullPath: '/intake'
-      preLoaderRoute: typeof IntakeRouteImport
+      preLoaderRoute: typeof AuthenticatedIntakeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/stats': {
-      id: '/stats'
+    '/_authenticated/stats': {
+      id: '/_authenticated/stats'
       path: '/stats'
       fullPath: '/stats'
-      preLoaderRoute: typeof StatsRouteImport
+      preLoaderRoute: typeof AuthenticatedStatsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  IntakeRoute: IntakeRoute,
-  StatsRoute: StatsRoute,
+  AuthenticatedHabitsRoute: AuthenticatedHabitsRoute,
+  AuthenticatedIntakeRoute: AuthenticatedIntakeRoute,
+  AuthenticatedStatsRoute: AuthenticatedStatsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
