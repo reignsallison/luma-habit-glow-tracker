@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AppShell, Ring } from "@/components/AppShell";
 import { actions, today, useStore } from "@/lib/store";
 
-export const Route = createFileRoute("/intake")({
+export const Route = createFileRoute("/_authenticated/intake")({
   head: () => ({
     meta: [
       { title: "Water & Calories — Pulse Daily Tracker" },

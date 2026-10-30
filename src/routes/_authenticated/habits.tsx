@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AppShell, Ring } from "@/components/AppShell";
 import { actions, profile, streak, today, useStore, type Habit } from "@/lib/store";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_authenticated/habits")({
   head: () => ({
     meta: [
       { title: "Habits — Pulse Daily Tracker" },
