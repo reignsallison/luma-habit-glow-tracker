@@ -10,3 +10,5 @@
 <!-- LOVABLE:END -->
 
 - Tracker screens live under src/routes/_authenticated; each user's tracker is one JSON row in tracker_state, loaded/saved by src/lib/store.ts — keeps the simple in-memory store while syncing across devices.
+- Every route declares staticData.sitemap; the router-derived sitemap includes only discoverable public pages and excludes the authenticated subtree to protect personal trackers.
+- Public visitor previews use isolated sample state, never the signed-in tracker store, so trying the product cannot change a user's real records.

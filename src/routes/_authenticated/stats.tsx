@@ -4,8 +4,12 @@ import { AppShell } from "@/components/AppShell";
 import { lastDays, streak, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/_authenticated/stats")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Statistics — Pulse Daily Tracker" },
       { name: "description", content: "Weekly consistency charts for habits, hydration and calories." },
       { property: "og:title", content: "Statistics — Pulse Daily Tracker" },

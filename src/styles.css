@@ -48,6 +48,8 @@
   --neon-emerald: oklch(0.78 0.18 160);
   --gradient-brand: linear-gradient(135deg, var(--neon-blue), var(--neon-violet));
   --gradient-fresh: linear-gradient(135deg, var(--neon-emerald), var(--neon-blue));
+  --hero-overlay: linear-gradient(90deg, oklch(0.12 0.01 265 / 98%) 0%, oklch(0.12 0.01 265 / 88%) 36%, oklch(0.12 0.01 265 / 15%) 100%);
+  --hero-mobile-overlay: linear-gradient(90deg, oklch(0.12 0.01 265 / 94%), oklch(0.12 0.01 265 / 65%));
 }
 
 @layer base {
@@ -63,7 +65,7 @@
       var(--background);
     background-attachment: fixed;
   }
-  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0; }
 }
 
 @utility glass {
@@ -91,3 +93,16 @@
 @utility animate-pop { animation: pop .45s cubic-bezier(.3,1.6,.5,1); }
 @utility animate-burst { animation: burst .6s ease-out forwards; }
 @utility animate-rise { animation: rise .5s ease-out both; }
+
+.welcome-hero { min-height: 520px; position: relative; }
+.welcome-hero::after { content: ""; position: absolute; inset: 0; background: var(--hero-overlay); }
+.welcome-hero img { position: absolute; width: 100%; height: 100%; object-fit: cover; }
+.welcome-hero > div { position: relative; z-index: 1; }
+@media (max-width: 640px) {
+  .welcome-hero { min-height: 470px; }
+  .welcome-hero::after { background: var(--hero-mobile-overlay); }
+  .welcome-hero img { object-position: 65% center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

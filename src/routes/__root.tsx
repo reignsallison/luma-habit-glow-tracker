@@ -74,6 +74,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -84,6 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Pulse — Daily Life & Routine Tracker" },
       { property: "og:description", content: "Track habits, water and calories in one beautiful daily tracker." },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Pulse" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
     ],

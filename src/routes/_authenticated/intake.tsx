@@ -4,8 +4,12 @@ import { AppShell, Ring } from "@/components/AppShell";
 import { actions, today, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/_authenticated/intake")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Water & Calories — Pulse Daily Tracker" },
       { name: "description", content: "Log water and calories with animated progress rings." },
       { property: "og:title", content: "Water & Calories — Pulse Daily Tracker" },
