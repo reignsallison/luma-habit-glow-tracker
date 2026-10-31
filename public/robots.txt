@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://luma-habit-glow-tracker.lovable.app/sitemap.xml

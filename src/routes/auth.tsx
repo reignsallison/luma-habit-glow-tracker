@@ -4,9 +4,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 
 export const Route = createFileRoute("/auth")({
+  staticData: { sitemap: false },
   validateSearch: (s: Record<string, unknown>): { mode?: "signup" | "login" } => ({ mode: s["mode"] === "signup" ? "signup" : "login" }),
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Sign in or create your account — Pulse" },
       { name: "description", content: "Log in or sign up free to track habits, water and calories with Pulse." },
       { property: "og:title", content: "Sign in to Pulse" },

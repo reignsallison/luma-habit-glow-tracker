@@ -4,8 +4,12 @@ import { AppShell, Ring } from "@/components/AppShell";
 import { actions, profile, streak, today, useStore, type Habit } from "@/lib/store";
 
 export const Route = createFileRoute("/_authenticated/habits")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Habits — Pulse Daily Tracker" },
       { name: "description", content: "Track daily habits, build streaks, and stay consistent with Pulse." },
       { property: "og:title", content: "Habits — Pulse Daily Tracker" },
