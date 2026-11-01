@@ -35,6 +35,57 @@ export type Database = {
         }
         Relationships: []
       }
+      chat_threads: {
+        Row: {
+          created_at: string
+          id: string
+          messages: Json
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          messages?: Json
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          messages?: Json
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      growth_events: {
+        Row: {
+          actor: string
+          day: string
+          id: string
+          kind: string
+          occurred_at: string
+        }
+        Insert: {
+          actor: string
+          day?: string
+          id?: string
+          kind: string
+          occurred_at?: string
+        }
+        Update: {
+          actor?: string
+          day?: string
+          id?: string
+          kind?: string
+          occurred_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -79,7 +130,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      growth_summary: { Args: { days?: number }; Returns: Json }
     }
     Enums: {
       [_ in never]: never

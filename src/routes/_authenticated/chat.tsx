@@ -1,0 +1,5 @@
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+export const Route = createFileRoute("/_authenticated/chat")({
+  staticData: { sitemap: "exclude-subtree" },
+  component: () => <Outlet />,
+});
