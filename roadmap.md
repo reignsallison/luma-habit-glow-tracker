@@ -1,6 +1,6 @@
 # Pulse visitor improvements
-- [ ] Add private, personalized AI routine suggestions with reviewed habit and intake logs.
-- [ ] Verify streaming suggestions, cancellation, validation, and signed-in access.
+- [x] Add private, personalized AI routine suggestions with reviewed habit and intake logs.
+- [x] Verify streaming suggestions, cancellation, validation, and signed-in access.
 - [x] Redesign the welcome page with clear sign-up, product preview, answers and sharing.
 - [x] Add a public-only sitemap and search metadata.
 - [x] Verify visitor flows and mobile/desktop layout; account creation, Google sign-in and real cross-device persistence remain unverified.
