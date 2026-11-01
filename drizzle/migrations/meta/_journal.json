@@ -15,6 +15,13 @@
       "when": 1793517179617,
       "tag": "0001_ai_provider_access",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793517639953,
+      "tag": "0002_growth_and_chat",
+      "breakpoints": true
     }
   ]
 }
