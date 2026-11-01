@@ -70,6 +70,9 @@ export function PulseChat({
   const busy = status === "submitted" || status === "streaming";
   useEffect(() => {
     textarea.current?.focus();
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      textarea.current?.scrollIntoView({ block: "center" });
+    }
   }, [threadId, busy]);
   return (
     <div className="flex min-w-0 h-[65vh] min-h-96 flex-col">
@@ -168,7 +171,7 @@ export function PulseChat({
           placeholder="Message Pulse Guide…"
           maxLength={20000}
           disabled={busy}
-          className="min-h-20"
+          className="min-h-20 scroll-mb-32"
         />
         <PromptInputFooter className="justify-end">
           <PromptInputSubmit
