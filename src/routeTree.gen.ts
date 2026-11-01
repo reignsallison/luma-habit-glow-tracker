@@ -13,11 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AuthenticatedGrowthRouteImport } from './routes/_authenticated/growth'
 import { Route as AuthenticatedHabitsRouteImport } from './routes/_authenticated/habits'
 import { Route as AuthenticatedIntakeRouteImport } from './routes/_authenticated/intake'
 import { Route as AuthenticatedRoutineRouteImport } from './routes/_authenticated/routine'
 import { Route as AuthenticatedStatsRouteImport } from './routes/_authenticated/stats'
 import { Route as ApiRoutineRouteImport } from './routes/api/routine'
+import { Route as ApiPublicActivityRouteImport } from './routes/api/public/activity'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -37,6 +39,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedGrowthRoute = AuthenticatedGrowthRouteImport.update({
+  id: '/growth',
+  path: '/growth',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedHabitsRoute = AuthenticatedHabitsRouteImport.update({
   id: '/habits',
@@ -63,26 +70,35 @@ const ApiRoutineRoute = ApiRoutineRouteImport.update({
   path: '/api/routine',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicActivityRoute = ApiPublicActivityRouteImport.update({
+  id: '/api/public/activity',
+  path: '/api/public/activity',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/growth': typeof AuthenticatedGrowthRoute
   '/habits': typeof AuthenticatedHabitsRoute
   '/intake': typeof AuthenticatedIntakeRoute
   '/routine': typeof AuthenticatedRoutineRoute
   '/stats': typeof AuthenticatedStatsRoute
   '/api/routine': typeof ApiRoutineRoute
+  '/api/public/activity': typeof ApiPublicActivityRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/growth': typeof AuthenticatedGrowthRoute
   '/habits': typeof AuthenticatedHabitsRoute
   '/intake': typeof AuthenticatedIntakeRoute
   '/routine': typeof AuthenticatedRoutineRoute
   '/stats': typeof AuthenticatedStatsRoute
   '/api/routine': typeof ApiRoutineRoute
+  '/api/public/activity': typeof ApiPublicActivityRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -90,11 +106,13 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_authenticated/growth': typeof AuthenticatedGrowthRoute
   '/_authenticated/habits': typeof AuthenticatedHabitsRoute
   '/_authenticated/intake': typeof AuthenticatedIntakeRoute
   '/_authenticated/routine': typeof AuthenticatedRoutineRoute
   '/_authenticated/stats': typeof AuthenticatedStatsRoute
   '/api/routine': typeof ApiRoutineRoute
+  '/api/public/activity': typeof ApiPublicActivityRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -102,32 +120,38 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/sitemap.xml'
+    | '/growth'
     | '/habits'
     | '/intake'
     | '/routine'
     | '/stats'
     | '/api/routine'
+    | '/api/public/activity'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/sitemap.xml'
+    | '/growth'
     | '/habits'
     | '/intake'
     | '/routine'
     | '/stats'
     | '/api/routine'
+    | '/api/public/activity'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/sitemap.xml'
+    | '/_authenticated/growth'
     | '/_authenticated/habits'
     | '/_authenticated/intake'
     | '/_authenticated/routine'
     | '/_authenticated/stats'
     | '/api/routine'
+    | '/api/public/activity'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -136,6 +160,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiRoutineRoute: typeof ApiRoutineRoute
+  ApiPublicActivityRoute: typeof ApiPublicActivityRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -167,6 +192,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/growth': {
+      id: '/_authenticated/growth'
+      path: '/growth'
+      fullPath: '/growth'
+      preLoaderRoute: typeof AuthenticatedGrowthRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/habits': {
       id: '/_authenticated/habits'
@@ -203,10 +235,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRoutineRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/activity': {
+      id: '/api/public/activity'
+      path: '/api/public/activity'
+      fullPath: '/api/public/activity'
+      preLoaderRoute: typeof ApiPublicActivityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedGrowthRoute: typeof AuthenticatedGrowthRoute
   AuthenticatedHabitsRoute: typeof AuthenticatedHabitsRoute
   AuthenticatedIntakeRoute: typeof AuthenticatedIntakeRoute
   AuthenticatedRoutineRoute: typeof AuthenticatedRoutineRoute
@@ -214,6 +254,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedGrowthRoute: AuthenticatedGrowthRoute,
   AuthenticatedHabitsRoute: AuthenticatedHabitsRoute,
   AuthenticatedIntakeRoute: AuthenticatedIntakeRoute,
   AuthenticatedRoutineRoute: AuthenticatedRoutineRoute,
@@ -229,6 +270,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiRoutineRoute: ApiRoutineRoute,
+  ApiPublicActivityRoute: ApiPublicActivityRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
