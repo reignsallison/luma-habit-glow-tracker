@@ -13,7 +13,8 @@ export async function recordGrowth(request: Request) {
   if (body.kind === "login") {
     const auth = await requestAuth(request);
     if (!auth) return Response.json({ message: "Sign in required" }, { status: 401, headers });
-    if (!growthRules.isFreshLogin(auth.user.last_sign_in_at, Date.now())) return Response.json({ ok: true }, { headers });
+    if (!growthRules.isFreshLogin(auth.user.last_sign_in_at, Date.now()))
+      return Response.json({ ok: true }, { headers });
     actor = auth.user.id;
   } else {
     const existing = request.headers

@@ -12,7 +12,12 @@ export function GrowthTracking() {
       }).catch(() => {});
     }
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event !== "SIGNED_IN" || !session || !growthRules.isFreshLogin(session.user.last_sign_in_at, Date.now())) return;
+      if (
+        event !== "SIGNED_IN" ||
+        !session ||
+        !growthRules.isFreshLogin(session.user.last_sign_in_at, Date.now())
+      )
+        return;
       // Do not make another auth API call inside the auth callback.
       void fetch("/api/public/activity", {
         method: "POST",
