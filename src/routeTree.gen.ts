@@ -13,12 +13,16 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AuthenticatedChatRouteImport } from './routes/_authenticated/chat'
 import { Route as AuthenticatedGrowthRouteImport } from './routes/_authenticated/growth'
 import { Route as AuthenticatedHabitsRouteImport } from './routes/_authenticated/habits'
 import { Route as AuthenticatedIntakeRouteImport } from './routes/_authenticated/intake'
 import { Route as AuthenticatedRoutineRouteImport } from './routes/_authenticated/routine'
 import { Route as AuthenticatedStatsRouteImport } from './routes/_authenticated/stats'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as ApiRoutineRouteImport } from './routes/api/routine'
+import { Route as AuthenticatedChatIndexRouteImport } from './routes/_authenticated/chat.index'
+import { Route as AuthenticatedChatThreadIdRouteImport } from './routes/_authenticated/chat.$threadId'
 import { Route as ApiPublicActivityRouteImport } from './routes/api/public/activity'
 
 const IndexRoute = IndexRouteImport.update({
@@ -39,6 +43,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedChatRoute = AuthenticatedChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedGrowthRoute = AuthenticatedGrowthRouteImport.update({
   id: '/growth',
@@ -65,11 +74,27 @@ const AuthenticatedStatsRoute = AuthenticatedStatsRouteImport.update({
   path: '/stats',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiRoutineRoute = ApiRoutineRouteImport.update({
   id: '/api/routine',
   path: '/api/routine',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedChatIndexRoute = AuthenticatedChatIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedChatRoute,
+} as any)
+const AuthenticatedChatThreadIdRoute =
+  AuthenticatedChatThreadIdRouteImport.update({
+    id: '/$threadId',
+    path: '/$threadId',
+    getParentRoute: () => AuthenticatedChatRoute,
+  } as any)
 const ApiPublicActivityRoute = ApiPublicActivityRouteImport.update({
   id: '/api/public/activity',
   path: '/api/public/activity',
@@ -80,13 +105,17 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/chat': typeof AuthenticatedChatRouteWithChildren
   '/growth': typeof AuthenticatedGrowthRoute
   '/habits': typeof AuthenticatedHabitsRoute
   '/intake': typeof AuthenticatedIntakeRoute
   '/routine': typeof AuthenticatedRoutineRoute
   '/stats': typeof AuthenticatedStatsRoute
+  '/api/chat': typeof ApiChatRoute
   '/api/routine': typeof ApiRoutineRoute
+  '/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/api/public/activity': typeof ApiPublicActivityRoute
+  '/chat/': typeof AuthenticatedChatIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -97,8 +126,11 @@ export interface FileRoutesByTo {
   '/intake': typeof AuthenticatedIntakeRoute
   '/routine': typeof AuthenticatedRoutineRoute
   '/stats': typeof AuthenticatedStatsRoute
+  '/api/chat': typeof ApiChatRoute
   '/api/routine': typeof ApiRoutineRoute
+  '/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/api/public/activity': typeof ApiPublicActivityRoute
+  '/chat': typeof AuthenticatedChatIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -106,13 +138,17 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_authenticated/chat': typeof AuthenticatedChatRouteWithChildren
   '/_authenticated/growth': typeof AuthenticatedGrowthRoute
   '/_authenticated/habits': typeof AuthenticatedHabitsRoute
   '/_authenticated/intake': typeof AuthenticatedIntakeRoute
   '/_authenticated/routine': typeof AuthenticatedRoutineRoute
   '/_authenticated/stats': typeof AuthenticatedStatsRoute
+  '/api/chat': typeof ApiChatRoute
   '/api/routine': typeof ApiRoutineRoute
+  '/_authenticated/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/api/public/activity': typeof ApiPublicActivityRoute
+  '/_authenticated/chat/': typeof AuthenticatedChatIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -120,13 +156,17 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/sitemap.xml'
+    | '/chat'
     | '/growth'
     | '/habits'
     | '/intake'
     | '/routine'
     | '/stats'
+    | '/api/chat'
     | '/api/routine'
+    | '/chat/$threadId'
     | '/api/public/activity'
+    | '/chat/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -137,21 +177,28 @@ export interface FileRouteTypes {
     | '/intake'
     | '/routine'
     | '/stats'
+    | '/api/chat'
     | '/api/routine'
+    | '/chat/$threadId'
     | '/api/public/activity'
+    | '/chat'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/sitemap.xml'
+    | '/_authenticated/chat'
     | '/_authenticated/growth'
     | '/_authenticated/habits'
     | '/_authenticated/intake'
     | '/_authenticated/routine'
     | '/_authenticated/stats'
+    | '/api/chat'
     | '/api/routine'
+    | '/_authenticated/chat/$threadId'
     | '/api/public/activity'
+    | '/_authenticated/chat/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -159,6 +206,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiChatRoute: typeof ApiChatRoute
   ApiRoutineRoute: typeof ApiRoutineRoute
   ApiPublicActivityRoute: typeof ApiPublicActivityRoute
 }
@@ -192,6 +240,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/chat': {
+      id: '/_authenticated/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof AuthenticatedChatRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/growth': {
       id: '/_authenticated/growth'
@@ -228,12 +283,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStatsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/routine': {
       id: '/api/routine'
       path: '/api/routine'
       fullPath: '/api/routine'
       preLoaderRoute: typeof ApiRoutineRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/chat/': {
+      id: '/_authenticated/chat/'
+      path: '/'
+      fullPath: '/chat/'
+      preLoaderRoute: typeof AuthenticatedChatIndexRouteImport
+      parentRoute: typeof AuthenticatedChatRoute
+    }
+    '/_authenticated/chat/$threadId': {
+      id: '/_authenticated/chat/$threadId'
+      path: '/$threadId'
+      fullPath: '/chat/$threadId'
+      preLoaderRoute: typeof AuthenticatedChatThreadIdRouteImport
+      parentRoute: typeof AuthenticatedChatRoute
     }
     '/api/public/activity': {
       id: '/api/public/activity'
@@ -245,7 +321,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedChatRouteChildren {
+  AuthenticatedChatThreadIdRoute: typeof AuthenticatedChatThreadIdRoute
+  AuthenticatedChatIndexRoute: typeof AuthenticatedChatIndexRoute
+}
+
+const AuthenticatedChatRouteChildren: AuthenticatedChatRouteChildren = {
+  AuthenticatedChatThreadIdRoute: AuthenticatedChatThreadIdRoute,
+  AuthenticatedChatIndexRoute: AuthenticatedChatIndexRoute,
+}
+
+const AuthenticatedChatRouteWithChildren =
+  AuthenticatedChatRoute._addFileChildren(AuthenticatedChatRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedChatRoute: typeof AuthenticatedChatRouteWithChildren
   AuthenticatedGrowthRoute: typeof AuthenticatedGrowthRoute
   AuthenticatedHabitsRoute: typeof AuthenticatedHabitsRoute
   AuthenticatedIntakeRoute: typeof AuthenticatedIntakeRoute
@@ -254,6 +344,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedChatRoute: AuthenticatedChatRouteWithChildren,
   AuthenticatedGrowthRoute: AuthenticatedGrowthRoute,
   AuthenticatedHabitsRoute: AuthenticatedHabitsRoute,
   AuthenticatedIntakeRoute: AuthenticatedIntakeRoute,
@@ -269,6 +360,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiChatRoute: ApiChatRoute,
   ApiRoutineRoute: ApiRoutineRoute,
   ApiPublicActivityRoute: ApiPublicActivityRoute,
 }
