@@ -8,6 +8,8 @@ const nav = [
   { to: "/intake", label: "Intake", icon: "◐" },
   { to: "/stats", label: "Stats", icon: "▤" },
   { to: "/routine", label: "Routine", icon: "✦" },
+  { to: "/chat", label: "Chat", icon: "◌" },
+  { to: "/growth", label: "Growth", icon: "↗" },
 ] as const;
 
 function useSignOut() {
@@ -45,7 +47,7 @@ export function AppShell({ title, subtitle, children }: { title: string; subtitl
         </div>
       </aside>
 
-      <main className="flex-1 px-5 pb-32 pt-6 md:px-10 md:pt-10 max-w-5xl">
+      <main className="flex-1 min-w-0 px-5 pb-32 pt-6 md:px-10 md:pt-10 max-w-6xl">
         <header className="mb-6 flex items-start justify-between gap-4 animate-rise">
           <div>
             <p className="text-sm text-muted-foreground">{subtitle}</p>
