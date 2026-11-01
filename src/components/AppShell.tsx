@@ -7,6 +7,7 @@ const nav = [
   { to: "/habits", label: "Habits", icon: "◎" },
   { to: "/intake", label: "Intake", icon: "◐" },
   { to: "/stats", label: "Stats", icon: "▤" },
+  { to: "/routine", label: "Routine", icon: "✦" },
 ] as const;
 
 function useSignOut() {
