@@ -42,7 +42,7 @@ export async function handleRoutine(request: Request) {
   let safeMessage = "AI suggestions could not be completed. Please try again later.";
   let release: () => void = () => {};
   const ready = new Promise<void>((resolve) => { release = resolve; });
-  const { result } = createResponsesCall(request, {
+  const { result, getRunId } = createResponsesCall(request, {
     baseURL: "https://ai.gateway.lovable.dev/v1", apiKey, model: MODEL,
     onResponse: async (response) => {
       upstreamStatus = response.status;
@@ -70,6 +70,10 @@ export async function handleRoutine(request: Request) {
           if (part.type === "text-delta") { hasText = true; send({ type: "text", text: part.text }); }
           if (part.type === "reasoning-delta") send({ type: "reasoning", text: part.text });
           if (part.type === "error") { failed = true; send({ type: "error", message: safeMessage }); release(); }
+          if (part.type === "finish" && part.finishReason === "content-filter") {
+            failed = true;
+            send({ type: "error", message: "The AI declined this request. No further generation will run." });
+          }
         }
         if (!hasText && !failed && !request.signal.aborted) send({ type: "error", message: "No suggestions were returned. Start a new request when you’re ready." });
         send({ type: "done" });
@@ -81,5 +85,8 @@ export async function handleRoutine(request: Request) {
   await ready;
   if (request.signal.aborted) return fail("Suggestion generation stopped.", 499);
   if (upstreamStatus !== 200) return fail(safeMessage, upstreamStatus);
-  return new Response(stream, { headers: { ...headers, "Content-Type": "application/x-ndjson", "X-Content-Type-Options": "nosniff" } });
+  const responseHeaders = new Headers({ ...headers, "Content-Type": "application/x-ndjson", "X-Content-Type-Options": "nosniff" });
+  const runId = getRunId();
+  if (runId) responseHeaders.set("X-Lovable-AIG-Run-ID", runId);
+  return new Response(stream, { headers: responseHeaders });
 }
