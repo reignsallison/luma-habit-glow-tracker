@@ -9,6 +9,11 @@ export type GrowthSummary = {
 };
 
 export const growthRules = {
+  isFreshLogin(lastSignIn: string | undefined, now: number) {
+    if (!lastSignIn) return false;
+    const age = now - Date.parse(lastSignIn);
+    return age >= -5000 && age <= 120000;
+  },
   isReturn(previousDay: string, currentDay: string) {
     return previousDay < currentDay;
   },
