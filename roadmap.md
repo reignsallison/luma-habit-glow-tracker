@@ -1,4 +1,5 @@
 # Pulse visitor improvements
+- [ ] Finish the dark welcome appearance and recheck visitor, Chat and Growth screens.
 - [ ] Add real aggregate visitor, signup, login and return tracking for all signed-in users.
 - [ ] Add separate private AI chats with across-device history and intelligent streamed replies.
 - [ ] Verify growth counts, chat isolation, saved history, streaming and mobile usability.
