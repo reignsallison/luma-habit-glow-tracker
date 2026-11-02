@@ -1,4 +1,5 @@
 # Pulse visitor improvements
+- [x] Strengthen Pulse Guide reasoning and clear explanations; verified a real timed plan, follow-up memory and saved replies.
 - [x] Finish the dark welcome appearance and recheck visitor, Chat and Growth screens.
 - [x] Add real aggregate visitor, signup, login and return tracking for all signed-in users.
 - [x] Add separate private AI chats with across-device history and intelligent streamed replies.
