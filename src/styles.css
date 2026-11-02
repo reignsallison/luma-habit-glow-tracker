@@ -48,8 +48,8 @@
   --neon-emerald: oklch(0.78 0.18 160);
   --gradient-brand: linear-gradient(135deg, var(--neon-blue), var(--neon-violet));
   --gradient-fresh: linear-gradient(135deg, var(--neon-emerald), var(--neon-blue));
-  --hero-overlay: linear-gradient(90deg, oklch(0.12 0.01 265 / 98%) 0%, oklch(0.12 0.01 265 / 88%) 36%, oklch(0.12 0.01 265 / 15%) 100%);
-  --hero-mobile-overlay: linear-gradient(90deg, oklch(0.12 0.01 265 / 94%), oklch(0.12 0.01 265 / 65%));
+  --hero-overlay: linear-gradient(90deg, oklch(0.12 0.01 265 / 98%) 0%, oklch(0.12 0.01 265 / 90%) 36%, oklch(0.12 0.01 265 / 68%) 100%);
+  --hero-mobile-overlay: linear-gradient(90deg, oklch(0.12 0.01 265 / 97%), oklch(0.12 0.01 265 / 84%));
 }
 
 @layer base {
