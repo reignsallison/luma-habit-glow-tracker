@@ -34,6 +34,18 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 - **Stay in sync**: every change made in Lovable is committed straight to this repository.
 - **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
+## Netlify deployment
+
+Netlify uses Node.js 22 and Bun 1.3.12, as configured in `netlify.toml`.
+The build runs `bun run build`, publishes `dist`, and uses Nitro's
+Netlify preset for server routes. `.nvmrc` selects the same Node.js major
+version for local development. Use `bun install --frozen-lockfile` to install
+the dependencies recorded in `bun.lock`.
+
+The Python setup messages in Netlify's dependency-installation logs do not
+by themselves indicate a build failure. If installation fails again, inspect
+the subsequent error and exit status to identify the failing step.
+
 ## Development
 
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
