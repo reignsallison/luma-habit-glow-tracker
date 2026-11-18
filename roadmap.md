@@ -1,4 +1,8 @@
 # Pulse visitor improvements
+- [ ] Align page metadata and add landing FAQ structured data.
+- [ ] Showcase the AI coach and upgrade the isolated interactive sample day.
+- [ ] Add Privacy, Terms and Contact pages with working feedback submission.
+- [ ] Verify sample interactions, feedback, sitemap and mobile layout.
 - [x] Strengthen Pulse Guide reasoning and clear explanations; verified a real timed plan, follow-up memory and saved replies.
 - [x] Finish the dark welcome appearance and recheck visitor, Chat and Growth screens.
 - [x] Add real aggregate visitor, signup, login and return tracking for all signed-in users.

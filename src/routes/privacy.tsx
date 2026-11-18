@@ -1,0 +1,19 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { PublicDocument } from "@/components/PublicShell";
+import { publicPageHead } from "@/lib/page-head";
+
+export const Route = createFileRoute("/privacy")({
+  staticData: { sitemap: true },
+  head: () => publicPageHead("/privacy", "Privacy Policy — Pulse", "How Pulse handles account details, habit and intake logs, AI conversations and feedback in our free, no-download daily routine tracker."),
+  component: PrivacyPage,
+});
+function PrivacyPage() {
+  return <PublicDocument title="Privacy Policy" intro="Your routines are personal. This policy explains the information Pulse handles and how it is used. Last updated November 18, 2026.">
+    <section><h2>Information you provide</h2><p>When you create an account, Pulse stores your account email and profile details. We store your habit names, completion logs, water and calorie entries, goals, and saved AI conversations so you can access them across devices. Contact submissions include your account identifier, reply email, topic and message. Please do not send medical records or other sensitive information in feedback.</p></section>
+    <section><h2>Why we use it</h2><p>We use account information to sign you in, keep your tracker associated with your account, save your progress and conversations, and handle feedback. Personal tracker records and chats are restricted to their account owner. Public examples on the homepage use separate, temporary sample data; changing an example does not change your saved tracker.</p></section>
+    <section><h2>AI coaching and service providers</h2><p>When you request AI help, relevant messages and, when used for personalization, habit and intake logs are sent through Lovable AI Gateway to the model provider to generate a response. The Routine page lets you review a snapshot before submitting it. Saved chats retain messages and tool results used in the conversation. Lovable Cloud provides account and data hosting. Google handles Google sign-in if you choose that option. These services process information needed to provide their features under their own terms and policies.</p></section>
+    <section><h2>Cookies, local storage and growth counts</h2><p>Pulse uses browser storage to maintain your account session and tracker experience. A first-party visitor cookie helps count visits and returning visitors without exposing identifiers in the community dashboard. We also count account creation and verified sign-ins. The dashboard available to signed-in users shows aggregates, not individual visitor or account records. Visit recording respects a browser’s Do Not Track signal; account activity counts are separate.</p></section>
+    <section><h2>Retention and your choices</h2><p>Saved tracker and chat information is kept to provide your account experience. You can edit tracker entries and delete individual conversations in Pulse. To request access, correction or deletion of account information, use <Link to="/contact">Contact / Feedback</Link> and choose Privacy request. We may need to verify ownership before handling a request. This form currently requires sign-in. Feedback and growth records are stored without an automatic expiry schedule; no specific response or deletion deadline is promised here.</p></section>
+    <section><h2>Security and changes</h2><p>Pulse uses account-based access controls to restrict personal records. No online service can guarantee absolute security. Do not share your password, and avoid including sensitive information that is not needed for tracking. This policy may be updated as the service changes; the date above identifies the current version.</p></section>
+  </PublicDocument>;
+}

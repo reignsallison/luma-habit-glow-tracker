@@ -98,6 +98,9 @@
 .welcome-hero::after { content: ""; position: absolute; inset: 0; background: var(--hero-overlay); }
 .welcome-hero img { position: absolute; width: 100%; height: 100%; object-fit: cover; }
 .welcome-hero > div { position: relative; z-index: 1; }
+.public-document h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; }
+.public-document p, .public-document li { color: var(--muted-foreground); font-size: 0.9375rem; line-height: 1.8; }
+.public-document a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 640px) {
   .welcome-hero { min-height: 470px; }
   .welcome-hero::after { background: var(--hero-mobile-overlay); }

@@ -80,15 +80,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Pulse — Daily Life & Routine Tracker" },
-      { name: "description", content: "Track habits, water and calories in one beautiful daily tracker." },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Pulse — Daily Life & Routine Tracker" },
-      { property: "og:description", content: "Track habits, water and calories in one beautiful daily tracker." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Pulse" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
