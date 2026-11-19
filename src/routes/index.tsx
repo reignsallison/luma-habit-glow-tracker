@@ -1,5 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useAccount } from "@/components/AccountSession";
 import { Activity, ArrowRight, Check, CheckCheck, Droplets, Share2, ChartNoAxesCombined, MonitorSmartphone, Plus, Sprout, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CoachPreview, SampleDayPreview } from "@/components/LandingExperience";
@@ -41,6 +42,9 @@ function Signup({ children = "Start my routine", className = "" }: { children?: 
 }
 
 function Landing() {
+  const { user } = useAccount();
+  const navigate = useNavigate();
+  useEffect(() => { if (user) void navigate({ to: "/habits", replace: true }); }, [user, navigate]);
   const [shared, setShared] = useState("");
   async function share() {
     const url = "https://luma-habit-glow-tracker.lovable.app/?utm_source=share&utm_medium=social";

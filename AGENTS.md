@@ -15,3 +15,4 @@
 - AI routine suggestions stream through an authenticated server route; validate the submitted tracker snapshot and keep prompts and gateway credentials server-only. Persistent provider access blocks are service-role-only and never retried automatically.
 - Growth stores daily-deduplicated first-party visits and verified sign-ins server-side; signup counts come from the auth lifecycle. Expose only an authenticated aggregate RPC, never raw visitor identifiers.
 - Chat uses route-derived thread IDs and owner-scoped UIMessage histories; server-stored history is authoritative and streamed replies persist on completion. Use AI Elements for the chat surface and read-only tracker tools for personalization.
+- AccountSession owns the single auth listener and verified returning-user state; public controls consume it, and sign-out cancels and clears queries before clearing the session to prevent stale personal data.

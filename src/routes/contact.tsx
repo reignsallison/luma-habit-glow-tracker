@@ -5,7 +5,7 @@ import { Send, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PublicDocument } from "@/components/PublicShell";
 import { publicPageHead } from "@/lib/page-head";
-import { supabase } from "@/integrations/supabase/client";
+import { useAccount } from "@/components/AccountSession";
 import { submitFeedback } from "@/lib/feedback.functions";
 import { feedbackSchema } from "@/lib/feedback-input";
 
@@ -16,8 +16,9 @@ export const Route = createFileRoute("/contact")({
 });
 function ContactPage() {
   const sendFeedback = useServerFn(submitFeedback);
-  const [signedIn, setSignedIn] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+  const { user, loading } = useAccount();
+  const signedIn = Boolean(user);
+  const loaded = !loading;
   const [email, setEmail] = useState("");
   const [topic, setTopic] = useState<"feedback" | "help" | "privacy">("feedback");
   const [message, setMessage] = useState("");
@@ -25,10 +26,8 @@ function ContactPage() {
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => { setSignedIn(Boolean(data.session)); setEmail((current) => current || data.session?.user.email || ""); setLoaded(true); }).catch(() => setLoaded(true));
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => { setSignedIn(Boolean(session)); setLoaded(true); });
-    return () => data.subscription.unsubscribe();
-  }, []);
+    setEmail((current) => current || user?.email || "");
+  }, [user]);
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); setError("");
     if (!signedIn) { setError("Please sign in before sending your message."); return; }

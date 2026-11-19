@@ -50,6 +50,9 @@
   --gradient-fresh: linear-gradient(135deg, var(--neon-emerald), var(--neon-blue));
   --hero-overlay: linear-gradient(90deg, oklch(0.12 0.01 265 / 98%) 0%, oklch(0.12 0.01 265 / 90%) 36%, oklch(0.12 0.01 265 / 68%) 100%);
   --hero-mobile-overlay: linear-gradient(90deg, oklch(0.12 0.01 265 / 97%), oklch(0.12 0.01 265 / 84%));
+  --google-background: #131314;
+  --google-border: #8E918F;
+  --google-foreground: #E3E3E3;
 }
 
 @layer base {
@@ -101,6 +104,7 @@
 .public-document h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; }
 .public-document p, .public-document li { color: var(--muted-foreground); font-size: 0.9375rem; line-height: 1.8; }
 .public-document a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+.google-sign-in, .google-sign-in:hover { background: var(--google-background); border-color: var(--google-border); color: var(--google-foreground); font-size: 14px; line-height: 20px; font-weight: 500; padding-inline: 12px; }
 @media (max-width: 640px) {
   .welcome-hero { min-height: 470px; }
   .welcome-hero::after { background: var(--hero-mobile-overlay); }

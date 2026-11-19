@@ -1,7 +1,8 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { profile, streak, unbindUser, useStore } from "@/lib/store";
-import { supabase } from "@/integrations/supabase/client";
+import { profile, streak, useStore } from "@/lib/store";
+import { useSignOut } from "@/components/AccountSession";
+import { Button } from "@/components/ui/button";
 
 const nav = [
   { to: "/habits", label: "Habits", icon: "◎" },
@@ -11,15 +12,6 @@ const nav = [
   { to: "/chat", label: "Chat", icon: "◌" },
   { to: "/growth", label: "Growth", icon: "↗" },
 ] as const;
-
-function useSignOut() {
-  const navigate = useNavigate();
-  return async () => {
-    await supabase.auth.signOut();
-    unbindUser();
-    navigate({ to: "/", replace: true });
-  };
-}
 
 export function AppShell({ title, subtitle, children }: { title: string; subtitle: string; children: ReactNode }) {
   const s = useStore();
@@ -43,7 +35,7 @@ export function AppShell({ title, subtitle, children }: { title: string; subtitl
         <div className="mt-auto glass p-4 !rounded-2xl">
           <ProfileChip />
           <div className="mt-3 text-xs text-muted-foreground">🔥 {streak(s)}-day streak · {profile.plan}</div>
-          <button onClick={signOut} className="mt-3 w-full rounded-xl bg-muted py-2 text-sm font-semibold text-muted-foreground transition hover:text-foreground">Log out</button>
+          <Button onClick={signOut} variant="secondary" className="mt-3 w-full">Log out</Button>
         </div>
       </aside>
 
@@ -54,7 +46,7 @@ export function AppShell({ title, subtitle, children }: { title: string; subtitl
             <h1 className="mt-1 text-3xl md:text-4xl font-bold">{title}</h1>
           </div>
           <div className="md:hidden flex items-center gap-2">
-            <button onClick={signOut} className="rounded-xl bg-muted px-3 py-2 text-xs font-semibold text-muted-foreground">Log out</button>
+            <Button onClick={signOut} variant="secondary" className="min-h-11 text-xs">Log out</Button>
             <Avatar />
           </div>
         </header>

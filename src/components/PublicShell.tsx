@@ -2,11 +2,14 @@ import { Link } from "@tanstack/react-router";
 import { Activity, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { ReactNode } from "react";
+import { useAccount, useSignOut } from "@/components/AccountSession";
 
 export function PublicHeader() {
+  const { user, loading } = useAccount();
+  const signOut = useSignOut();
   return <header className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-5">
     <Link to="/" aria-label="Pulse home" className="flex items-center gap-2 font-display text-2xl font-bold"><Activity className="size-7 text-primary" />Pulse<span className="hidden font-sans text-xs font-normal text-muted-foreground sm:inline">DAILY ROUTINE</span></Link>
-    <nav className="flex gap-2" aria-label="Account"><Button variant="ghost" className="min-h-11" asChild><Link to="/auth" search={{ mode: "login" }}>Log in</Link></Button><Button className="min-h-11" asChild><Link to="/auth" search={{ mode: "signup" }}>Sign up<ArrowRight /></Link></Button></nav>
+    <nav className="flex gap-2" aria-label="Account">{loading ? <Button disabled className="min-h-11" variant="ghost">Please wait…</Button> : user ? <><Button variant="ghost" className="min-h-11" onClick={signOut}>Log out</Button><Button className="min-h-11" asChild><Link to="/habits">My routine<ArrowRight /></Link></Button></> : <><Button variant="ghost" className="min-h-11" asChild><Link to="/auth" search={{ mode: "login" }}>Log in</Link></Button><Button className="min-h-11" asChild><Link to="/auth" search={{ mode: "signup" }}>Sign up<ArrowRight /></Link></Button></>}</nav>
   </header>;
 }
 export function PublicFooter() {
