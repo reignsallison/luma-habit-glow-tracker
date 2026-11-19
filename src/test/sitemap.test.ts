@@ -5,7 +5,7 @@ import { sitemapStaticPaths, sitemapXML } from '@/lib/sitemap';
 describe('Public sitemap', () => {
   it('includes the public homepage and excludes personal trackers and account flows', () => {
     const paths = sitemapStaticPaths(getRouter());
-    expect(paths).toEqual(['/']);
+    expect(paths).toEqual(['/', '/contact', '/privacy', '/terms']);
     for (const path of ['/habits', '/intake', '/stats', '/auth']) expect(paths).not.toContain(path);
   });
   it('uses the public origin without fabricated last-modified dates', () => {

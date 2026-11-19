@@ -2,7 +2,8 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Activity, Copy } from "lucide-react";
+import { Activity, Copy, CalendarCheck, Dumbbell, Lightbulb, Sprout } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import {
   Conversation,
@@ -71,11 +72,11 @@ export function PulseChat({
   useEffect(() => {
     textarea.current?.focus();
     if (window.matchMedia("(max-width: 767px)").matches) {
-      textarea.current?.scrollIntoView({ block: "center" });
+      textarea.current?.closest("form")?.scrollIntoView({ block: "center" });
     }
   }, [threadId, busy]);
   return (
-    <div className="flex min-w-0 h-[65vh] min-h-96 flex-col">
+    <div className="mb-24 flex min-w-0 h-[65vh] min-h-96 flex-col md:mb-0">
       <div className="flex items-center gap-2 border-b border-border pb-3">
         <Activity className="size-5 text-neon-emerald" />
         <h2 className="font-semibold">Pulse Guide</h2>
@@ -87,8 +88,20 @@ export function PulseChat({
             <div className="py-8">
               <h3 className="font-display text-2xl mb-2">What’s on your mind?</h3>
               <p className="text-sm text-muted-foreground">
-                A better routine, a tricky question, or a plan for tomorrow.
+                A realistic routine, a little movement, or a question worth thinking through.
               </p>
+              <div className="mt-5 grid gap-2 sm:grid-cols-2">
+                {[
+                  { icon: CalendarCheck, label: "Plan my day", text: "Help me build an achievable daily routine. Ask about my schedule and priorities first." },
+                  { icon: Dumbbell, label: "Start exercising", text: "Help me start a safe exercise routine. Ask about my experience, available time, equipment and any limitations first." },
+                  { icon: Sprout, label: "Today's small step", text: "Based on my saved habit logs, give me one achievable tip for today with an easier fallback. Be honest if there are no recent logs." },
+                  { icon: Lightbulb, label: "Think it through", text: "Help me think through a question or decision. Ask what I need help with first." },
+                ].map(({ icon: Icon, label, text }) => (
+                  <Button key={label} variant="outline" disabled={busy} className="min-h-12 justify-start whitespace-normal text-left" onClick={() => { setStopped(false); void sendMessage({ text }); }}>
+                    <Icon className="shrink-0 text-neon-emerald" />{label}
+                  </Button>
+                ))}
+              </div>
             </div>
           )}
           {messages.map((message) => (
