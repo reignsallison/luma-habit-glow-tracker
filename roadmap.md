@@ -1,5 +1,5 @@
 # Pulse visitor improvements
-- [ ] Streamline Google/email access and verify remembered sessions, returning-user navigation and sign-out.
+- [x] Streamline Google/email access; verified enabled hosted providers, remembered sessions after reload/reopening, returning-user navigation and browser-only sign-out; all 18 tests pass. Google authorization and new email confirmation require the account owner's inbox/provider interaction and were not exercised.
 - [x] Improve AI coaching for everyday questions, daily routines and safe exercise; verified a 15-minute exercise plan, arithmetic, saved follow-up and a 10-minute personalized routine.
 - [x] Align page metadata and add landing FAQ structured data.
 - [x] Showcase the AI coach and upgrade the isolated interactive sample day.

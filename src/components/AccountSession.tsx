@@ -52,7 +52,7 @@ export function useSignOut() {
   return async () => {
     await queryClient.cancelQueries();
     queryClient.clear();
-    const { error } = await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut({ scope: "local" });
     if (error) return;
     unbindUser();
     await navigate({ to: "/auth", replace: true });
