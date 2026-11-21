@@ -1,4 +1,5 @@
 # Pulse visitor improvements
+- [x] Enable immediate email signup; real signup opened Habits without an inbox link and survived reopening/reload. Verified retryable login errors, hosted Google handoff to accounts.google.com, and all 21 tests. Completing Google's account approval remains user-controlled and untested.
 - [x] Streamline Google/email access; verified enabled hosted providers, remembered sessions after reload/reopening, returning-user navigation and browser-only sign-out; all 18 tests pass. Google authorization and new email confirmation require the account owner's inbox/provider interaction and were not exercised.
 - [x] Improve AI coaching for everyday questions, daily routines and safe exercise; verified a 15-minute exercise plan, arithmetic, saved follow-up and a 10-minute personalized routine.
 - [x] Align page metadata and add landing FAQ structured data.

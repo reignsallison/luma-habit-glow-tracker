@@ -32,7 +32,7 @@ const questions = [
   ["Do I need to download anything?", "No. Pulse is a no-download daily routine tracker that runs in your web browser on your phone, tablet or computer."],
   ["Can I use Pulse on more than one device?", "Yes. Sign in to the same account on each device to access your saved tracker."],
   ["What can I track?", "Custom daily habits, habit streaks, water intake and calorie totals. Your statistics show your habits and intake over 7 or 14 days."],
-  ["How do I create an account?", "Choose Sign up and use Google or your email and password. If you sign up by email, follow the confirmation link in your inbox before logging in."],
+  ["How do I create an account?", "Choose Sign up and use Google or your email and password. Email signup signs you in immediately—no inbox confirmation link needed."],
   ["How does the AI coach use my logs?", "After sign-in, Pulse Guide can use your saved habit and intake logs to suggest achievable routines and explain weekly patterns. Routine suggestions let you review the logs you share. AI can make mistakes and is not a medical professional."],
   ["Can I try Pulse before creating an account?", "Yes. The example day and coach examples on this page work without an account. Sample changes are not saved and cannot affect a real tracker."],
 ];

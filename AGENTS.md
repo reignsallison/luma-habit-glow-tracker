@@ -16,3 +16,4 @@
 - Growth stores daily-deduplicated first-party visits and verified sign-ins server-side; signup counts come from the auth lifecycle. Expose only an authenticated aggregate RPC, never raw visitor identifiers.
 - Chat uses route-derived thread IDs and owner-scoped UIMessage histories; server-stored history is authoritative and streamed replies persist on completion. Use AI Elements for the chat surface and read-only tracker tools for personalization.
 - AccountSession owns the single auth listener and verified returning-user state; public controls consume it, and browser-local sign-out cancels and clears queries before clearing the session to prevent stale personal data without signing out other devices.
+- Email signup uses the tested account-access helper to obtain a session; AccountSession remains responsible for verified navigation, avoiding competing auth listeners.
